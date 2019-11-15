@@ -26,8 +26,6 @@ public class EmailScheduler {
     @Scheduled(cron = "0/10 * * * * *")
     public void sendInformationEmail() {
         String message = taskRepository.count() == 1 ? " task" : " tasks";
-
-
         long size = taskRepository.count();
 
         simpleEmailService.send(new Mail(
