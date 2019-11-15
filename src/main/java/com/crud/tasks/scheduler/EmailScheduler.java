@@ -26,7 +26,7 @@ public class EmailScheduler {
     @Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         String message;
-        if (taskRepository.count() == 14) {
+        if (taskRepository.count() == 1) {
             message = TASK;
         } else {
             message = TASKS;
