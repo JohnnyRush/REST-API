@@ -30,4 +30,11 @@ public class TrelloFacade {
         trelloValidator.validateCard(trelloCard);
         return trelloService.createTrelloCard(trelloMapper.mapToCardDto(trelloCard));
     }
+//    when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
+
+//    when(trelloMapper.mapToBoards(trelloBoards)).thenReturn(mappedTrelloBoards);
+
+//    when(trelloMapper.mapToBoardsDto(mappedTrelloBoards)).thenReturn(trelloBoards);
+
+//    when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(mappedTrelloBoards);
 }
