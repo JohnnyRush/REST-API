@@ -23,7 +23,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TaskController.class)
-public class TaskControllerTestSuit {
+public class TaskControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean
