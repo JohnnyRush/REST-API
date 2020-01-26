@@ -37,6 +37,7 @@ public class SimpleEmailService {
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
             messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+            messageHelper.setCc(mail.getToCc());
         };
     }
 
