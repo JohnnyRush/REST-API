@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.scheduler.EmailScheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class SimpleEmailService {
     @Autowired
     private MailCreatorService mailCreatorService;
 
+
     public void send(final Mail mail) {
         LOGGER.info("Starting email preparation...");
         try {
@@ -35,8 +37,14 @@ public class SimpleEmailService {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
-            messageHelper.setSubject(mail.getSubject());
-            messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+            switch (mail.getSubject()) {
+                case TrelloService.SUBJECT:
+                    messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+                    break;
+                case EmailScheduler.SUBJECT:
+                    messageHelper.setText(mailCreatorService.schedulerEmail(mail.getMessage()), true);
+                    break;
+            }
         };
     }
 
