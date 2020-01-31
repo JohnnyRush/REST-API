@@ -35,9 +35,14 @@ public class TaskController {
         service.deleteTask(id);
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteAllTask")
+    public void deleteAllTask() { service.deleteAll();
+    }
+
     @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
     public TaskDto updateTask(@RequestBody TaskDto taskDto) {
-        return taskMapper.mapToTaskDto(service.saveTask(taskMapper.mapToTask(taskDto))); }
+        return taskMapper.mapToTaskDto(service.saveTask(taskMapper.mapToTask(taskDto)));
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "createTask", consumes = APPLICATION_JSON_VALUE)
     public void createTask(@RequestBody TaskDto taskDto) {

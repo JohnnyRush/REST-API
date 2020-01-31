@@ -30,5 +30,7 @@ public class DbService {
         repository.deleteById(id);
     }
 
+    public void deleteAll(){repository.deleteAll();}
+
 }
 
