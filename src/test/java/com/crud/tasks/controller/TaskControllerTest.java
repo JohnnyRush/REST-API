@@ -39,7 +39,7 @@ public class TaskControllerTest {
         List<TaskDto> taskDtoList = new ArrayList<>();
         Mockito.when(taskController.getTasks()).thenReturn(taskDtoList);
         //When & Then
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200))//or is OK)
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
     }
@@ -53,7 +53,7 @@ public class TaskControllerTest {
         Mockito.when(taskController.getTasks()).thenReturn(taskDtoList);
 
         //When & Then
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].title", Matchers.is("Test")))
@@ -65,13 +65,13 @@ public class TaskControllerTest {
         //Given
         TaskDto taskDto = new TaskDto(1L, "Test", "Test");
         Mockito.when(taskController.getTask(ArgumentMatchers.anyLong())).thenReturn(taskDto);
-
         //When & Then
-        mockMvc.perform(MockMvcRequestBuilders.get("/v1/task/getTask").param("id", "1"))
-                .andExpect(MockMvcResultMatchers.status().is(200))
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/tasks/1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Test")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("Test")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("Test")))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TaskControllerTest {
         String jsonContent = gson.toJson(taskDto);
 
         //When and Then
-        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/task/deleteTask").param("id", "1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/v1/tasks/").param("id", "1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -102,7 +102,7 @@ public class TaskControllerTest {
         String jsonContent = gson.toJson(taskDto);
 
         // When &  Then
-        mockMvc.perform(MockMvcRequestBuilders.put("/v1/task/updateTask")
+        mockMvc.perform(MockMvcRequestBuilders.put("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
@@ -121,7 +121,7 @@ public class TaskControllerTest {
         String jsonContent = gson.toJson(taskDto);
 
         //When and Then
-        mockMvc.perform(MockMvcRequestBuilders.post("/v1/task/createTask")
+        mockMvc.perform(MockMvcRequestBuilders.post("/v1/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
